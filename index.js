@@ -66,7 +66,7 @@ async function run() {
       );
       res.send(result);
 
-      console.log(result);
+      // console.log(result);
     });
 
     //post a data from client side
@@ -75,6 +75,16 @@ async function run() {
       const newUser = req.body;
       const resutl = await inventoryCollection.insertOne(newUser);
       res.send(resutl);
+    });
+
+    //Get My Items
+    app.get("/myitem", async (req, res) => {
+      const email = req.query.email;
+      console.log(email);
+      const query = { email: email };
+      const cursor = inventoryCollection.find(query);
+      const myItems = await cursor.toArray();
+      res.send(myItems);
     });
   } finally {
   }
